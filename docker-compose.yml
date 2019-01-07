@@ -1,0 +1,24 @@
+version: '2'
+services:
+  mysql:
+        image: mysql:8.0
+        container_name: mysql-server-80
+        command: --default-authentication-plugin=mysql_native_password
+        volumes:
+          - .:/application
+        restart: always
+        environment:
+          - MYSQL_ROOT_PASSWORD=.sweetpwd.
+          - MYSQL_DATABASE=my_db
+          - MYSQL_USER=db_user
+          - MYSQL_PASSWORD=.mypwd
+        ports:
+          - "8082:3306"
+  website:
+    container_name: php72
+    build:
+      context: ./
+    volumes:
+      - /Development/PetProjects/LearningK8s/src:/var/www/html
+    ports:
+      - 8000:80
